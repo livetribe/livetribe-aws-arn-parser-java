@@ -58,7 +58,7 @@ public class ApiGatewayArn extends Arn {
             return ApiGatewayRestApisArn.parseArn(region, lexer);
         }
 
-        return new ApiGatewayArn(region);
+        throw new ArnSyntaxException("Unrecognized ARN");
     }
 
     @Override
