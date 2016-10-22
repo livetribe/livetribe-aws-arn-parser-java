@@ -30,3 +30,6 @@ Arn arn = new ExecuteApiResourceArn("us-east-1", "123456789012", "0df34wjxyd",
                                     "test", WILDCARD, "/mydemoresource/*");
 ```
 Converting the ARN to a `String` will provide a correctly formatted AWS ARN.
+
+## License
+[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
