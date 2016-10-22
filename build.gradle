@@ -1,9 +1,26 @@
-apply plugin: 'java'
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+}
 
-sourceCompatibility = 1.6
+plugins {
+    id 'com.jfrog.bintray' version '1.7.2'
+}
+
+group = 'org.livetribe'
+version = currentVersion
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = '1.6'
+targetCompatibility = '1.6'
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -29,3 +46,54 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+}
+
+publishing {
+    publications {
+        LiveTribePublication(MavenPublication) {
+            from components.java
+            groupId 'org.livetribe'
+            artifactId 'livetribe-aws-arn-parser-java'
+            version currentVersion
+
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'AWS ARN Parser')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.bintrayUser : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayKey') ? project.bintrayKey : System.getenv('BINTRAY_KEY')
+    publications = ['LiveTribePublication']
+    pkg {
+        repo = 'maven'
+        userOrg = 'livetribe'
+        name = 'livetribe-aws-arn-parser-java'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/livetribe/livetribe-aws-arn-parser-java.git'
+
+        version {
+            name = currentVersion
+            desc = 'AWS ARN Parser v' + currentVersion
+            vcsTag = currentVersion
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}
+
