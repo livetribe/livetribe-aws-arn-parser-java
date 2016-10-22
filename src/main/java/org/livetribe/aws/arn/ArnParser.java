@@ -35,6 +35,8 @@ public final class ArnParser {
             arn = ApiGatewayArn.parseArn(lexer);
         } else if (service.equals("execute-api")) {
             arn = ExecuteApiArn.parseArn(lexer);
+        } else if (service.equals("iam")) {
+            arn = IamArn.parseArn(lexer);
         } else {
             throw new ArnSyntaxException("Unrecognized service");
         }

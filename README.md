@@ -8,6 +8,7 @@
 The AWS ARN parser currently supports:
 * `apigateway` ARNs
 * `execute-api` ARNs
+* `iam` ARNs
 
 ## Usage
 

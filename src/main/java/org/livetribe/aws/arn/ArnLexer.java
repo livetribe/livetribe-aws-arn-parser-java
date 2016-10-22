@@ -60,6 +60,14 @@ class ArnLexer {
         return buffer.toString();
     }
 
+    String scanToEOL() {
+        StringBuilder buffer = new StringBuilder();
+        while (current < characters.length) {
+            buffer.append(characters[current++]);
+        }
+        return buffer.toString();
+    }
+
     void mark() {
         stack.push(current);
     }
