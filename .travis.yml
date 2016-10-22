@@ -14,6 +14,9 @@ before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
+after_success:
+- gradle jacocoTestReport coveralls
+
 notifications:
   slack:
     secure: qpM9/MscbBH1vxFRCQB1bNSJti+U76/IRH6S5Z5L5qN2yUAYPdutSX2GHEuhHjSQGQeSu2631DGU5I4xEzy9v3v8fANd6UFXiPGMjduY0zCY1zDeVZ+5JaD5nRu+tcKYdIPhjUoalKZwOMNU/LFGwTXIOV8Zt3vQprFOxEw0gQExknIHzZM5Rrn4LKZvbeJwll3XFn0A6Qxy3TKHPU3XadDfWALrEepcqpfjskmSmmXc6ZgrCLWZ2frmwZRFWxPKw01QovWwmvhe6v0hYBg8MPBCH6Y+Dd8Jrbay0ntUPYl2pk67+jldlTPDhjA2f/9OXmr2aTd/FBcDSxEV0gd+NSKCIIUrkeubh4/WOoYqOexV+Lbb8EW5o9s2ZSiYIho16FCqiJd6tJc27x0fNGJh/AxGxZ9fUidBfePYQhfjbtd1O0wbvKWgjuAYD/czNogUlRkjVU6xACgmIEq6lB8Uko2OGDriwOdmQP12ggpsrtmdPEkYTCBhi1ZiL4ya0q6Q/QUEMs/icbPhb28jqq1zajd/xFqPSz9E1Uc3IMSitVDJ0QOJWYq8m/uwjSn/FujZL0An1n/h8Bah5OVOo9LSXQnBq7PfloqNlTyEKIixcz9gRNjqEoKDpNyOanyel6VAns81dx2dZHuDBGZxK94XfITu6NPbEYcXOEgYQNAKigw=

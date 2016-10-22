@@ -6,7 +6,9 @@ buildscript {
 }
 
 plugins {
+    id 'com.github.kt3k.coveralls' version '2.6.3'
     id 'com.jfrog.bintray' version '1.7.2'
+    id 'jacoco'
 }
 
 group = 'org.livetribe'
@@ -18,6 +20,13 @@ apply plugin: 'maven-publish'
 
 sourceCompatibility = '1.6'
 targetCompatibility = '1.6'
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
+}
 
 repositories {
     jcenter()
