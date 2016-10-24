@@ -21,39 +21,39 @@ import static org.livetribe.aws.arn.Util.requireNonNull;
 /**
  * @author LiveTribe
  */
-public class IamUserArn extends IamArn {
-    private final String userName;
+public class IamFederatedUserArn extends IamArn {
+    private final String federatedUser;
 
-    public IamUserArn(String accountId, String userName) {
+    public IamFederatedUserArn(String accountId, String federatedUser) {
         super(accountId);
 
-        this.userName = requireNonNull(userName, "User name cannot be null");
+        this.federatedUser = requireNonNull(federatedUser, "Federate user cannot be null");
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFederatedUser() {
+        return federatedUser;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IamUserArn)) return false;
+        if (!(o instanceof IamFederatedUserArn)) return false;
         if (!super.equals(o)) return false;
 
-        IamUserArn that = (IamUserArn)o;
+        IamFederatedUserArn that = (IamFederatedUserArn)o;
 
-        return userName.equals(that.userName);
+        return federatedUser.equals(that.federatedUser);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + userName.hashCode();
+        result = 31 * result + federatedUser.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "arn:aws:iam::" + getAccountId() + ":user/" + userName;
+        return "arn:aws:iam::" + getAccountId() + ":federated-user/" + federatedUser;
     }
 }

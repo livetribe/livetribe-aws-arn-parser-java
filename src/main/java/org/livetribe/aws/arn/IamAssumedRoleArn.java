@@ -21,39 +21,47 @@ import static org.livetribe.aws.arn.Util.requireNonNull;
 /**
  * @author LiveTribe
  */
-public class IamUserArn extends IamArn {
-    private final String userName;
+public class IamAssumedRoleArn extends IamArn {
+    private final String role;
+    private final String roleSession;
 
-    public IamUserArn(String accountId, String userName) {
+    public IamAssumedRoleArn(String accountId, String role, String roleSession) {
         super(accountId);
 
-        this.userName = requireNonNull(userName, "User name cannot be null");
+        this.role = requireNonNull(role, "Role cannot be null");
+        this.roleSession = requireNonNull(roleSession, "Role session cannot be null");
     }
 
-    public String getUserName() {
-        return userName;
+    public String getRole() {
+        return role;
+    }
+
+    public String getRoleSession() {
+        return roleSession;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IamUserArn)) return false;
+        if (!(o instanceof IamAssumedRoleArn)) return false;
         if (!super.equals(o)) return false;
 
-        IamUserArn that = (IamUserArn)o;
+        IamAssumedRoleArn that = (IamAssumedRoleArn)o;
 
-        return userName.equals(that.userName);
+        if (!role.equals(that.role)) return false;
+        return roleSession.equals(that.roleSession);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + userName.hashCode();
+        result = 31 * result + role.hashCode();
+        result = 31 * result + roleSession.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "arn:aws:iam::" + getAccountId() + ":user/" + userName;
+        return "arn:aws:iam::" + getAccountId() + ":assumed-role/" + role + "/" + roleSession;
     }
 }

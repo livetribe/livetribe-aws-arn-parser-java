@@ -46,7 +46,12 @@ public class ArnLexerTest {
         ArnLexer lexer = new ArnLexer("abc");
 
         lexer.consume("a");
+
+        assertEquals(lexer.toString(), "ArnLexer{toBeScanned=bc, characters=abc, current=1, stack=[]}");
+
         lexer.consume("bc");
+
+        assertEquals(lexer.toString(), "ArnLexer{toBeScanned=, characters=abc, current=3, stack=[]}");
 
         assertTrue(lexer.done());
     }

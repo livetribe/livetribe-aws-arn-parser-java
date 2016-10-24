@@ -15,6 +15,9 @@
  */
 package org.livetribe.aws.arn;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.livetribe.aws.arn.ArnParser.parseArn;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
@@ -39,5 +42,21 @@ public class IamGroupArnTest {
 
         assertEquals(parseArn("arn:aws:iam::123456789012:group/division_abc/subdivision_xyz/product_A/Developers"),
                      new IamGroupArn("123456789012", "division_abc/subdivision_xyz/product_A/Developers"));
+    }
+
+    public void testSet() {
+        Set<Arn> arns = new HashSet<Arn>();
+
+        arns.add(new IamGroupArn("123456789012", "Developers"));
+        arns.add(new IamGroupArn("123456789012", "Developers"));
+
+        assertEquals(arns.size(), 1);
+    }
+
+    public void testEquals() {
+        Arn first = new IamGroupArn("123456789012", "Developers");
+        Arn second = new IamGroupArn("123456789012", "Developers");
+
+        assert first.equals(second);
     }
 }

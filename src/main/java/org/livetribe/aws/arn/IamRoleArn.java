@@ -43,7 +43,6 @@ public class IamRoleArn extends IamArn {
         IamRoleArn that = (IamRoleArn)o;
 
         return role.equals(that.role);
-
     }
 
     @Override

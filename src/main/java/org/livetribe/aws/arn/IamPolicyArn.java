@@ -21,39 +21,39 @@ import static org.livetribe.aws.arn.Util.requireNonNull;
 /**
  * @author LiveTribe
  */
-public class IamUserArn extends IamArn {
-    private final String userName;
+public class IamPolicyArn extends IamArn {
+    private final String policy;
 
-    public IamUserArn(String accountId, String userName) {
+    public IamPolicyArn(String accountId, String policy) {
         super(accountId);
 
-        this.userName = requireNonNull(userName, "User name cannot be null");
+        this.policy = requireNonNull(policy, "Policy cannot be null");
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPolicy() {
+        return policy;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IamUserArn)) return false;
+        if (!(o instanceof IamPolicyArn)) return false;
         if (!super.equals(o)) return false;
 
-        IamUserArn that = (IamUserArn)o;
+        IamPolicyArn that = (IamPolicyArn)o;
 
-        return userName.equals(that.userName);
+        return policy.equals(that.policy);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + userName.hashCode();
+        result = 31 * result + policy.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "arn:aws:iam::" + getAccountId() + ":user/" + userName;
+        return "arn:aws:iam::" + getAccountId() + ":policy/" + policy;
     }
 }

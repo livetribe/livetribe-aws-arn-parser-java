@@ -21,39 +21,39 @@ import static org.livetribe.aws.arn.Util.requireNonNull;
 /**
  * @author LiveTribe
  */
-public class IamUserArn extends IamArn {
-    private final String userName;
+public class IamInstanceProfileArn extends IamArn {
+    private final String instanceProfile;
 
-    public IamUserArn(String accountId, String userName) {
+    public IamInstanceProfileArn(String accountId, String instanceProfile) {
         super(accountId);
 
-        this.userName = requireNonNull(userName, "User name cannot be null");
+        this.instanceProfile = requireNonNull(instanceProfile, "Instance profile cannot be null");
     }
 
-    public String getUserName() {
-        return userName;
+    public String getInstanceProfile() {
+        return instanceProfile;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IamUserArn)) return false;
+        if (!(o instanceof IamInstanceProfileArn)) return false;
         if (!super.equals(o)) return false;
 
-        IamUserArn that = (IamUserArn)o;
+        IamInstanceProfileArn that = (IamInstanceProfileArn)o;
 
-        return userName.equals(that.userName);
+        return instanceProfile.equals(that.instanceProfile);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + userName.hashCode();
+        result = 31 * result + instanceProfile.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "arn:aws:iam::" + getAccountId() + ":user/" + userName;
+        return "arn:aws:iam::" + getAccountId() + ":instance-profile/" + instanceProfile;
     }
 }

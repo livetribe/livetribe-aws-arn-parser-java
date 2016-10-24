@@ -19,11 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.livetribe.aws.arn.ArnParser.parseArn;
-import static org.livetribe.aws.arn.HttpVerb.GET;
-import static org.livetribe.aws.arn.HttpVerb.WILDCARD;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertSame;
-
 import org.testng.annotations.Test;
 
 
@@ -31,33 +27,29 @@ import org.testng.annotations.Test;
  * @author LiveTribe
  */
 @Test
-public class IamRootArnTest
-{
-    public void testIamRootArn() {
-        IamRootArn arn = new IamRootArn("123456789012");
-        assertEquals(arn.getPartition(), "aws");
-        assertEquals(arn.getService(), "iam");
-        assertEquals(arn.getAccountId(), "123456789012");
-        assertEquals(arn.toString(), "arn:aws:iam::123456789012:root");
+public class IamInstanceProfileArnTest {
+    public void testIamInstanceProfileArn() {
+        IamInstanceProfileArn arn = new IamInstanceProfileArn("123456789012", "Webserver");
+        assertEquals(arn.toString(), "arn:aws:iam::123456789012:instance-profile/Webserver");
     }
 
-    public void testParseIamRootArn() throws ArnSyntaxException {
-        assertEquals(parseArn("arn:aws:iam::123456789012:root"),
-                     new IamRootArn("123456789012"));
+    public void testParseIamInstanceProfileArn() throws ArnSyntaxException {
+        assertEquals(parseArn("arn:aws:iam::123456789012:instance-profile/Webserver"),
+                     new IamInstanceProfileArn("123456789012", "Webserver"));
     }
 
     public void testSet() {
         Set<Arn> arns = new HashSet<Arn>();
 
-        arns.add(new IamRootArn("123456789012"));
-        arns.add(new IamRootArn("123456789012"));
+        arns.add(new IamInstanceProfileArn("123456789012", "Webserver"));
+        arns.add(new IamInstanceProfileArn("123456789012", "Webserver"));
 
         assertEquals(arns.size(), 1);
     }
 
     public void testEquals() {
-        Arn first = new IamRootArn("123456789012");
-        Arn second = new IamRootArn("123456789012");
+        Arn first = new IamInstanceProfileArn("123456789012", "Webserver");
+        Arn second = new IamInstanceProfileArn("123456789012", "Webserver");
 
         assert first.equals(second);
     }

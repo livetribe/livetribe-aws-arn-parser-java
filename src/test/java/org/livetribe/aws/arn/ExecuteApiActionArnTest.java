@@ -93,4 +93,20 @@ public class ExecuteApiActionArnTest {
 
         assertEquals(parseArn("arn:aws:execute-api:InvalidateCache"), new ExecuteApiActionArn(INVALIDATE_CACHE));
     }
+
+    public void testSet() {
+        Set<Arn> arns = new HashSet<Arn>();
+
+        arns.add(new ExecuteApiActionArn(INVALIDATE_CACHE));
+        arns.add(new ExecuteApiActionArn(INVALIDATE_CACHE));
+
+        assertEquals(arns.size(), 1);
+    }
+
+    public void testEquals() {
+        Arn first = new ExecuteApiActionArn(INVALIDATE_CACHE);
+        Arn second = new ExecuteApiActionArn(INVALIDATE_CACHE);
+
+        assert first.equals(second);
+    }
 }

@@ -21,39 +21,39 @@ import static org.livetribe.aws.arn.Util.requireNonNull;
 /**
  * @author LiveTribe
  */
-public class IamUserArn extends IamArn {
-    private final String userName;
+public class IamMfaArn extends IamArn {
+    private final String virtualDevice;
 
-    public IamUserArn(String accountId, String userName) {
+    public IamMfaArn(String accountId, String virtualDevice) {
         super(accountId);
 
-        this.userName = requireNonNull(userName, "User name cannot be null");
+        this.virtualDevice = requireNonNull(virtualDevice, "Virtual device cannot be null");
     }
 
-    public String getUserName() {
-        return userName;
+    public String getVirtualDevice() {
+        return virtualDevice;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IamUserArn)) return false;
+        if (!(o instanceof IamMfaArn)) return false;
         if (!super.equals(o)) return false;
 
-        IamUserArn that = (IamUserArn)o;
+        IamMfaArn that = (IamMfaArn)o;
 
-        return userName.equals(that.userName);
+        return virtualDevice.equals(that.virtualDevice);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + userName.hashCode();
+        result = 31 * result + virtualDevice.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "arn:aws:iam::" + getAccountId() + ":user/" + userName;
+        return "arn:aws:iam::" + getAccountId() + ":mfa/" + virtualDevice;
     }
 }

@@ -45,21 +45,52 @@ public class IamArn extends Arn {
                 throw new ArnSyntaxException("Unrecognized content after root in IAM ARN");
             }
             return new IamRootArn(accountId);
-        }
-        else if (kind.equals("user")) {
+        } else if (kind.equals("user")) {
             lexer.consume("/");
             String userName = lexer.scanToEOL();
             return new IamUserArn(accountId, userName);
-        }
-        else if (kind.equals("group")) {
+        } else if (kind.equals("group")) {
             lexer.consume("/");
             String group = lexer.scanToEOL();
             return new IamGroupArn(accountId, group);
-        }
-        else if (kind.equals("role")) {
+        } else if (kind.equals("role")) {
             lexer.consume("/");
             String role = lexer.scanToEOL();
             return new IamRoleArn(accountId, role);
+        } else if (kind.equals("policy")) {
+            lexer.consume("/");
+            String policy = lexer.scanToEOL();
+            return new IamPolicyArn(accountId, policy);
+        } else if (kind.equals("instance-profile")) {
+            lexer.consume("/");
+            String instanceProfile = lexer.scanToEOL();
+            return new IamInstanceProfileArn(accountId, instanceProfile);
+        } else if (kind.equals("federated-user")) {
+            lexer.consume("/");
+            String federatedUser = lexer.scanToEOL();
+            return new IamFederatedUserArn(accountId, federatedUser);
+        } else if (kind.equals("assumed-role")) {
+            lexer.consume("/");
+            String role = lexer.scan('/');
+            lexer.consume("/");
+            String roleSession = lexer.scanToEOL();
+            return new IamAssumedRoleArn(accountId, role, roleSession);
+        } else if (kind.equals("mfa")) {
+            lexer.consume("/");
+            String virtualDevice = lexer.scanToEOL();
+            return new IamMfaArn(accountId, virtualDevice);
+        } else if (kind.equals("server-certificate")) {
+            lexer.consume("/");
+            String certificate = lexer.scanToEOL();
+            return new IamServerCertificateArn(accountId, certificate);
+        } else if (kind.equals("saml-provider")) {
+            lexer.consume("/");
+            String provider = lexer.scanToEOL();
+            return new IamSamlProviderArn(accountId, provider);
+        } else if (kind.equals("oidc-provider")) {
+            lexer.consume("/");
+            String provider = lexer.scanToEOL();
+            return new IamOidcProviderArn(accountId, provider);
         }
 
         throw new ArnSyntaxException("Unrecognized ARN");

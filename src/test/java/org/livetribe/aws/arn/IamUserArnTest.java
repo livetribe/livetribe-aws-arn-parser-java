@@ -15,6 +15,9 @@
  */
 package org.livetribe.aws.arn;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.livetribe.aws.arn.ArnParser.parseArn;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
@@ -39,5 +42,21 @@ public class IamUserArnTest {
 
         assertEquals(parseArn("arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob"),
                      new IamUserArn("123456789012", "division_abc/subdivision_xyz/Bob"));
+    }
+
+    public void testSet() {
+        Set<Arn> arns = new HashSet<Arn>();
+
+        arns.add(new IamUserArn("123456789012", "Bob"));
+        arns.add(new IamUserArn("123456789012", "Bob"));
+
+        assertEquals(arns.size(), 1);
+    }
+
+    public void testEquals() {
+        Arn first = new IamUserArn("123456789012", "Bob");
+        Arn second = new IamUserArn("123456789012", "Bob");
+
+        assert first.equals(second);
     }
 }

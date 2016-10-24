@@ -15,6 +15,9 @@
  */
 package org.livetribe.aws.arn;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.livetribe.aws.arn.ArnParser.parseArn;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
@@ -39,5 +42,21 @@ public class IamRoleArnTest {
 
         assertEquals(parseArn("arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access"),
                      new IamRoleArn("123456789012", "application_abc/component_xyz/S3Access"));
+    }
+
+    public void testSet() {
+        Set<Arn> arns = new HashSet<Arn>();
+
+        arns.add(new IamRoleArn("123456789012", "S3Access"));
+        arns.add(new IamRoleArn("123456789012", "S3Access"));
+
+        assertEquals(arns.size(), 1);
+    }
+
+    public void testEquals() {
+        Arn first = new IamRoleArn("123456789012", "S3Access");
+        Arn second = new IamRoleArn("123456789012", "S3Access");
+
+        assert first.equals(second);
     }
 }

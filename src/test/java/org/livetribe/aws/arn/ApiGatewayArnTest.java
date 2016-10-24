@@ -15,6 +15,10 @@
  */
 package org.livetribe.aws.arn;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.livetribe.aws.arn.ExecuteApiActionEnum.INVALIDATE_CACHE;
 import org.testng.annotations.Test;
 
 import static org.livetribe.aws.arn.ArnParser.parseArn;
@@ -122,5 +126,22 @@ public class ApiGatewayArnTest {
     public void testParseApiGatewayRestApisArn() throws ArnSyntaxException {
         assertEquals(parseArn("arn:aws:apigateway:us-east-1::/restapis/a/b/c"),
                      new ApiGatewayRestApisArn("us-east-1", "/a/b/c"));
+    }
+
+
+    public void testSet() {
+        Set<Arn> arns = new HashSet<Arn>();
+
+        arns.add(new ApiGatewayRestApisArn("us-east-1", "/a/b/c"));
+        arns.add(new ApiGatewayRestApisArn("us-east-1", "/a/b/c"));
+
+        assertEquals(arns.size(), 1);
+    }
+
+    public void testEquals() {
+        Arn first = new ApiGatewayRestApisArn("us-east-1", "/a/b/c");
+        Arn second = new ApiGatewayRestApisArn("us-east-1", "/a/b/c");
+
+        assert first.equals(second);
     }
 }

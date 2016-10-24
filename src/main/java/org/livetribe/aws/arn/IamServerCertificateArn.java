@@ -21,39 +21,39 @@ import static org.livetribe.aws.arn.Util.requireNonNull;
 /**
  * @author LiveTribe
  */
-public class IamUserArn extends IamArn {
-    private final String userName;
+public class IamServerCertificateArn extends IamArn {
+    private final String certificate;
 
-    public IamUserArn(String accountId, String userName) {
+    public IamServerCertificateArn(String accountId, String certificate) {
         super(accountId);
 
-        this.userName = requireNonNull(userName, "User name cannot be null");
+        this.certificate = requireNonNull(certificate, "Certificate cannot be null");
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCertificate() {
+        return certificate;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IamUserArn)) return false;
+        if (!(o instanceof IamServerCertificateArn)) return false;
         if (!super.equals(o)) return false;
 
-        IamUserArn that = (IamUserArn)o;
+        IamServerCertificateArn that = (IamServerCertificateArn)o;
 
-        return userName.equals(that.userName);
+        return certificate.equals(that.certificate);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + userName.hashCode();
+        result = 31 * result + certificate.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "arn:aws:iam::" + getAccountId() + ":user/" + userName;
+        return "arn:aws:iam::" + getAccountId() + ":server-certificate/" + certificate;
     }
 }

@@ -15,6 +15,9 @@
  */
 package org.livetribe.aws.arn;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.testng.annotations.Test;
 
 import static org.livetribe.aws.arn.ArnParser.parseArn;
@@ -150,5 +153,21 @@ public class ExecuteApiResourceArnTest {
 
         assertEquals(parseArn("arn:aws:execute-api:us-east-1:123456789012:0df34wjxyd/test/*/mydemoresource/*"),
                      new ExecuteApiResourceArn("us-east-1", "123456789012", "0df34wjxyd", "test", WILDCARD, "/mydemoresource/*"));
+    }
+
+    public void testSet() {
+        Set<Arn> arns = new HashSet<Arn>();
+
+        arns.add(new ExecuteApiResourceArn("us-east-1", "*", "*"));
+        arns.add(new ExecuteApiResourceArn("us-east-1", "*", "*"));
+
+        assertEquals(arns.size(), 1);
+    }
+
+    public void testEquals() {
+        Arn first = new ExecuteApiResourceArn("us-east-1", "*", "*");
+        Arn second = new ExecuteApiResourceArn("us-east-1", "*", "*");
+
+        assert first.equals(second);
     }
 }
